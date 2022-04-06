@@ -10,6 +10,8 @@ with open('user.txt') as f:
 url_link = all_text[0].split("=", maxsplit=1)[1].strip()
 user_name = all_text[1].split("=", maxsplit=1)[1].strip()
 passtext = all_text[2].split("=", maxsplit=1)[1].strip()
+mail_link = all_text[3].split("=", maxsplit=1)[1].strip()
+port = all_text[4].split("=", maxsplit=1)[1].strip()
 
 header = {
     "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36",
@@ -22,7 +24,7 @@ price = soup.select_one(selector='span .a-price-whole').getText().replace(".",""
 if int(price) < 11000:
     my_email = user_name
     password = passtext
-    with smtplib.SMTP("smtp.mail.yahoo.com", port=587) as connection:
+    with smtplib.SMTP(mail_link, port=port) as connection:
         connection.starttls()
         connection.login(user=my_email, password=password)
         connection.sendmail(
